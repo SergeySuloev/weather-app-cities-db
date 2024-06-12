@@ -1,4 +1,7 @@
+import "dart:convert";
+
 import "package:hive/hive.dart";
+import 'package:flutter/services.dart' show rootBundle;
 import "package:path_provider/path_provider.dart" as pathProvider;
 
 part 'main.g.dart';
@@ -42,8 +45,21 @@ class OpenWeatherMapCity {
   }
 }
 
+Future<void> loadJson() async {
+  String jsonString = await rootBundle.loadString('assets/city.list.json');
+  final jsonResponse = jsonDecode(jsonString) as List;
+  List<OpenWeatherMapCity> cities =
+      jsonResponse.map((item) => OpenWeatherMapCity.fromJson(item)).toList();
+  final box = await Hive.openBox<OpenWeatherMapCity>('cities');
+  for (var city in cities) {
+    await box.add(city);
+  }
+  await box.close();
+}
+
 void main() async {
   final appDocumentDirectory =
       await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(OpenWeatherMapCityAdapter());
 }
