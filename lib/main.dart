@@ -1,4 +1,5 @@
 import "dart:convert";
+import "dart:io";
 
 import "package:hive/hive.dart";
 import 'package:flutter/services.dart' show rootBundle;
@@ -48,13 +49,26 @@ class OpenWeatherMapCity {
 Future<void> loadJson() async {
   String jsonString = await rootBundle.loadString('assets/city.list.json');
   final jsonResponse = jsonDecode(jsonString) as List;
+
   List<OpenWeatherMapCity> cities =
       jsonResponse.map((item) => OpenWeatherMapCity.fromJson(item)).toList();
+
   final box = await Hive.openBox<OpenWeatherMapCity>('cities');
   for (var city in cities) {
     await box.add(city);
   }
   await box.close();
+}
+
+Future<void> exportDb() async {
+  final appDocumentDirectory =
+      await pathProvider.getApplicationDocumentsDirectory();
+  final dbFile = File('${appDocumentDirectory.path}/cities.hive');
+
+  final exportDir = await pathProvider.getExternalStorageDirectory();
+  final exportedFile = File('${exportDir!.path}/exported_cities.hive');
+
+  await dbFile.copy(exportedFile.path);
 }
 
 void main() async {
