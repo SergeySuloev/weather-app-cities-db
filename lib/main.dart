@@ -1,6 +1,6 @@
 import "dart:convert";
 import "dart:io";
-
+import "package:flutter/widgets.dart";
 import "package:hive/hive.dart";
 import 'package:flutter/services.dart' show rootBundle;
 import "package:path_provider/path_provider.dart" as pathProvider;
@@ -19,7 +19,7 @@ class OpenWeatherMapCity {
   final String state;
 
   @HiveField(3)
-  final String countryCode;
+  final String? countryCode;
 
   @HiveField(4)
   final double coordLon;
@@ -40,13 +40,14 @@ class OpenWeatherMapCity {
         id: json['id'],
         name: json['name'],
         state: json['state'],
-        countryCode: json['countryCode'],
+        countryCode: json['country'],
         coordLon: json['coordLon'],
         coordLat: json['coordLat']);
   }
 }
 
 Future<void> loadJson() async {
+  WidgetsFlutterBinding.ensureInitialized();
   String jsonString = await rootBundle.loadString('assets/city.list.json');
   final jsonResponse = jsonDecode(jsonString) as List;
 
