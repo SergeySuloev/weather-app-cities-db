@@ -41,8 +41,8 @@ class OpenWeatherMapCity {
         name: json['name'],
         state: json['state'],
         countryCode: json['country'],
-        coordLon: json['lon'],
-        coordLat: json['lat']);
+        coordLon: json['coord']['lon'],
+        coordLat: json['coord']['lat']);
   }
 }
 
