@@ -30,6 +30,16 @@ class OpenWeatherMapCity {
       required this.countryCode,
       required this.coordLon,
       required this.coordLat});
+
+  factory OpenWeatherMapCity.fromJson(Map<String, dynamic> json) {
+    return OpenWeatherMapCity(
+        id: json['id'],
+        name: json['name'],
+        state: json['state'],
+        countryCode: json['countryCode'],
+        coordLon: json['coordLon'],
+        coordLat: json['coordLat']);
+  }
 }
 
 void main() async {
