@@ -6,25 +6,30 @@ part 'main.g.dart';
 @HiveType(typeId: 0)
 class OpenWeatherMapCity {
   @HiveField(0)
-  int id;
+  final int id;
 
   @HiveField(1)
-  String name;
+  final String name;
 
   @HiveField(2)
-  String state;
+  final String state;
 
   @HiveField(3)
-  String countryCode;
+  final String countryCode;
 
   @HiveField(4)
-  double coordLon;
+  final double coordLon;
 
   @HiveField(5)
-  double coordLat;
+  final double coordLat;
 
-  OpenWeatherMapCity(this.id, this.name, this.state, this.countryCode,
-      this.coordLon, this.coordLat);
+  OpenWeatherMapCity(
+      {required this.id,
+      required this.name,
+      required this.state,
+      required this.countryCode,
+      required this.coordLon,
+      required this.coordLat});
 }
 
 void main() async {
