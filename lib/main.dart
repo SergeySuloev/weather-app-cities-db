@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import "dart:convert";
 import "dart:io";
 import "package:flutter/widgets.dart";
@@ -37,7 +39,7 @@ class OpenWeatherMapCity {
 
   factory OpenWeatherMapCity.fromJson(Map<String, dynamic> json) {
     return OpenWeatherMapCity(
-        id: json['id'] as double,
+        id: (json['id'] as num).toDouble(),
         name: json['name'],
         state: json['state'],
         countryCode: json['country'],
@@ -65,10 +67,8 @@ Future<void> exportDb() async {
   final appDocumentDirectory =
       await pathProvider.getApplicationDocumentsDirectory();
   final dbFile = File('${appDocumentDirectory.path}/cities.hive');
-
-  final exportDir = await pathProvider.getExternalStorageDirectory();
-  final exportedFile = File('${exportDir!.path}/exported_cities.hive');
-
+  final exportedFile =
+      File('${appDocumentDirectory.path}/exported_cities.hive');
   await dbFile.copy(exportedFile.path);
 }
 
@@ -78,8 +78,12 @@ void main() async {
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(OpenWeatherMapCityAdapter());
 
+  print('Starting exporting JSON to Hive DB...');
+
   await loadJson();
   await exportDb();
+
+  print('Done!');
 
   exit(0);
 }
