@@ -17,12 +17,12 @@ class OpenWeatherMapCityAdapter extends TypeAdapter<OpenWeatherMapCity> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OpenWeatherMapCity(
-      fields[0] as int,
-      fields[1] as String,
-      fields[2] as String,
-      fields[3] as String,
-      fields[4] as double,
-      fields[5] as double,
+      id: fields[0] as int,
+      name: fields[1] as String,
+      state: fields[2] as String,
+      countryCode: fields[3] as String,
+      coordLon: fields[4] as double,
+      coordLat: fields[5] as double,
     );
   }
 
