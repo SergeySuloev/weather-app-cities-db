@@ -10,7 +10,7 @@ part 'main.g.dart';
 @HiveType(typeId: 0)
 class OpenWeatherMapCity {
   @HiveField(0)
-  final int id;
+  final double id;
 
   @HiveField(1)
   final String name;
@@ -37,7 +37,7 @@ class OpenWeatherMapCity {
 
   factory OpenWeatherMapCity.fromJson(Map<String, dynamic> json) {
     return OpenWeatherMapCity(
-        id: json['id'],
+        id: json['id'] as double,
         name: json['name'],
         state: json['state'],
         countryCode: json['country'],
