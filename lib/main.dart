@@ -76,4 +76,9 @@ void main() async {
       await pathProvider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(OpenWeatherMapCityAdapter());
+
+  await loadJson();
+  await exportDb();
+
+  exit(0);
 }
