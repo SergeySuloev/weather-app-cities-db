@@ -1,5 +1,5 @@
 import "package:hive/hive.dart";
-import "package:path_provider/path_provider.dart";
+import "package:path_provider/path_provider.dart" as pathProvider;
 
 part 'main.g.dart';
 
@@ -27,4 +27,8 @@ class OpenWeatherMapCity {
       this.coordLon, this.coordLat);
 }
 
-void main() async {}
+void main() async {
+  final appDocumentDirectory =
+      await pathProvider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+}
