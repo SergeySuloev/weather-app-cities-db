@@ -20,7 +20,7 @@ class OpenWeatherMapCityAdapter extends TypeAdapter<OpenWeatherMapCity> {
       id: fields[0] as int,
       name: fields[1] as String,
       state: fields[2] as String,
-      countryCode: fields[3] as String,
+      countryCode: fields[3] as String?,
       coordLon: fields[4] as double,
       coordLat: fields[5] as double,
     );
